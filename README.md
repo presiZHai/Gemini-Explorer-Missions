@@ -1,5 +1,7 @@
 # Gemini-Explorer-Missions
 
+<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/1ec832c8a6f54e2aaa0c5605cb9b5a7a?sid=0ac5630d-17d4-45f7-b8f6-074331cc4888" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+
 ## Gemini Explorer
 
 ### Overview
@@ -17,156 +19,160 @@ Gemini Explorer is an interactive chat interface that utilizes Google's advanced
   * Session History: Keeps track of the conversation history within the session, allowing for context-aware interactions.
 
 ### Installation
-  #### Prerequisites
-       * Python 3.10
-       * Streamlit
-       * Google Vertex AI Platform
   
-  #### Step-by-Step Installation Guide
-        1. Clone the GitHub Repository - Open your terminal and clone the project repository:
+#### Prerequisites
+    * Python 3.10
+    * Streamlit
+    * Google Vertex AI Platform
 
-           ```bash
-             git clone https://github.com/presiZHai/Gemini-Explorer-Missions.git
-           ```
+#### Step-by-Step Installation Guide
+1. Clone the GitHub Repository - Open your terminal and clone the project repository:
 
-        2. Create and Activate Virtual Environment - Navigate to the project directory, create a virtual environment, and activate it:
+```bash
+    git clone https://github.com/presiZHai/Gemini-Explorer-Missions.git
+```
 
-            ```bash
-            conda create -p ./env python==3.10 -y
-            ```
-            ```bash
-            conda activate ./env
-            ```
-        
-        3.  Install Requirements - Install the required Python packages:
+2. Create and Activate Virtual Environment - Navigate to the project directory, create a virtual environment, and activate it:
 
-            ```bash
-            pip install -r requirements.txt
-            ```
+```bash
+    conda create -p ./env python==3.10 -y
+```
 
-        4. Run the Streamlit App - Launch the Streamlit application and view it in your browser at http://localhost:8501:
+```bash
+    conda activate ./env
+```
 
-            ```bash
-            streamlit run gemini_explorer.py
-            ```
+3.  Install Requirements - Install the required Python packages:
+
+```bash
+    pip install -r requirements.txt
+```
+
+4. Run the Streamlit App - Launch the Streamlit application and view it in your browser at http://localhost:8501:
+
+```bash
+    streamlit run gemini_explorer.py
+```
 
 ### Usage
-   #### GCloud authentication
+#### GCloud authentication
+ * 
 
-   #### Importing Necessary Libraries - Ensure all necessary libraries are imported:
 
-    ```bash
-        import vertexai
-        import streamlit as st
-        from vertexai.preview import generative_models
-        from vertexai.preview.generative_models import GenerativeModel, Part, Content, ChatSession
-    ```
+#### Importing Necessary Libraries - Ensure all necessary libraries are imported:
 
-   #### Initializing the Vertex AI Model - Set up the project configuration and initialize the Gemini model:
+```bash
+    import vertexai
+    import streamlit as st
+    from vertexai.preview import generative_models
+    from vertexai.preview.generative_models import GenerativeModel, Part, Content, ChatSession
+```
 
-    ```bash
-        project = "project-id"  # The project id in the google.cloud console
-        vertexai.init(project=project)
+#### Initializing the Vertex AI Model - Set up the project configuration and initialize the Gemini model:
 
-        config = generative_models.GenerationConfig(
-        temperature=0.4
-        )
+```bash
+    project = "project-id"  # The project id in the google.cloud console
+    vertexai.init(project=project)
 
-        model = GenerativeModel(
-        "gemini-pro",
-        generation_config=config
-        )
+    config = generative_models.GenerationConfig(
+    temperature=0.4
+    )
 
-        chat = model.start_chat()
-    ```
-   #### Creating the Chat Interface - Use Streamlit to build the interactive chat interface:
+    model = GenerativeModel(
+    "gemini-pro",
+    generation_config=config
+    )
 
-    ```bash
-        # Helper function to display and send Streamlit messages
-        def llm_function(chat: ChatSession, query, user_name):
-            response = chat.send_message(query)
-            output = response.candidates[0].content.parts[0].text
+    chat = model.start_chat()
+```
+#### Creating the Chat Interface - Use Streamlit to build the interactive chat interface:
 
-            # Personalize the response
-            if user_name:
-                output = f"Hello {user_name}! " + output
+```bash
+    # Helper function to display and send Streamlit messages
+    def llm_function(chat: ChatSession, query, user_name):
+    response = chat.send_message(query)
+    output = response.candidates[0].content.parts[0].text
 
-            with st.chat_message('model'):
-                st.markdown(output)
+    # Personalize the response
+    if user_name:
+        output = f"Hello {user_name}! " + output
 
-            st.session_state.messages.append(
-                {
-                    "role": "user",
-                    "content": query
-                }
-            )
-            st.session_state.messages.append(
-                {
-                    "role": "model",
-                    "content": output
-                }
-            )
+    with st.chat_message('model'):
+        st.markdown(output)
 
-        # Set the title
-        st.title("Gemini Explorer")
+    st.session_state.messages.append(
+        {
+            "role": "user",
+            "content": query
+        }
+    )
+    st.session_state.messages.append(
+        {
+            "role": "model",
+            "content": output
+        }
+    )
 
-        # User name input
-        user_name = st.text_input("Please enter your name")
+    # Set the title
+    st.title("Gemini Explorer")
 
-        # Initialize chat history
-        if "messages" not in st.session_state:
-            st.session_state.messages = []
+    # User name input
+    user_name = st.text_input("Please enter your name")
 
-        # Display and load chat history
-        for index, message in enumerate(st.session_state.messages):
-            content = Content(
-                role=message["role"],
-                parts=[Part.from_text(message["content"])]
-            )
+    # Initialize chat history
+    if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-            if index != 0:
-                with st.chat_message(message["role"]):
-                    st.markdown(message["content"])
+    # Display and load chat history
+    for index, message in enumerate(st.session_state.messages):
+    content = Content(
+        role=message["role"],
+        parts=[Part.from_text(message["content"])]
+    )
 
-            chat.history.append(content)
+    if index != 0:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
-        # For initial message startup
-        if len(st.session_state.messages) == 0:
-            st.session_state.messages.append(
-                {
-                    "role": "user",
-                    "content": "Hi, I'm Gemini Explorer. How can I help you today?"
-                }
-            )
-            st.session_state.messages.append(
-                {
-                    "role": "model",
-                    "content": "Hello! I'm here to help you explore the Gemini universe."
-                }
-            )
+    chat.history.append(content)
 
-        # Get user input and call llm_function
-        query = st.chat_input("Gemini Explorer")
+    # For initial message startup
+    if len(st.session_state.messages) == 0:
+    st.session_state.messages.append(
+        {
+            "role": "user",
+            "content": "Hi, I'm Gemini Explorer. How can I help you today?"
+        }
+    )
+    st.session_state.messages.append(
+        {
+            "role": "model",
+            "content": "Hello! I'm here to help you explore the Gemini universe."
+        }
+    )
 
-        if query:
-            with st.chat_message("user"):
-                st.markdown(query)
+    # Get user input and call llm_function
+    query = st.chat_input("Gemini Explorer")
 
-            llm_function(chat, query, user_name)
-    ```
+    if query:
+    with st.chat_message("user"):
+        st.markdown(query)
 
-   #### Sample Interaction
-         Upon running the app, users are greeted and prompted to enter their queries. The model responds with informative and context-aware answers. Personalization is integrated, providing a friendly and engaging interaction.
+    llm_function(chat, query, user_name)
+```
+
+#### Sample Interaction
+Upon running the app, users are greeted and prompted to enter their queries. The model responds with informative and context-aware answers. Personalization is integrated, providing a friendly and engaging interaction.
 
 ### Contribution
-    We welcome contributions to enhance the features and functionality of Gemini Explorer. Please follow these steps to contribute:
+We welcome contributions to enhance the features and functionality of Gemini Explorer. Please follow these steps to contribute:
     1. Fork the repository.
     2. Create a new branch for your feature or bug fix.
     3. Commit your changes and push them to your branch.
     4. Open a pull request with a detailed description of your changes.
 
 ### License
-    This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License. See the LICENSE file for more details.
 
 ### Contact
-    For any questions or feedback, feel free to reach out at abiodungndj@gmail.com.
+For any questions or feedback, feel free to reach out at abiodungndj@gmail.com.
