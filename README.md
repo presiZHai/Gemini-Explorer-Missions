@@ -1,6 +1,9 @@
 # Gemini-Explorer-Missions
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe src="https://www.loom.com/embed/1ec832c8a6f54e2aaa0c5605cb9b5a7a?sid=0ac5630d-17d4-45f7-b8f6-074331cc4888" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
+## Presentation and Demo
+
+- **Presentation Slides:** [View Presentation](https://app.pitch.com/app/presentation/05c2f455-37c5-4a07-9eee-433ea410f602/e8c8ddb1-59b5-4322-bfa1-a76fcc1c9164)
+- **Video Demo:** [Watch Video](https://www.loom.com/share/1ec832c8a6f54e2aaa0c5605cb9b5a7a?sid=e0946c44-4754-42f9-87c5-6e93839ba63b)
 
 ## Gemini Explorer
 
@@ -21,9 +24,9 @@ Gemini Explorer is an interactive chat interface that utilizes Google's advanced
 ### Installation
   
 #### Prerequisites
-    * Python 3.10
-    * Streamlit
-    * Google Vertex AI Platform
+* Python 3.10
+* Streamlit
+* Google Vertex AI Platform
 
 #### Step-by-Step Installation Guide
 1. Clone the GitHub Repository - Open your terminal and clone the project repository:
@@ -56,7 +59,10 @@ Gemini Explorer is an interactive chat interface that utilizes Google's advanced
 
 ### Usage
 #### GCloud authentication
- * 
+* Create a new Google Cloud project.
+* Enable the Vertex AI API for the project.
+* Create a service account with necessary roles (e.g., Owner, AI Platform Admin, Vertex AI Administrator, Vertex AI Model Creator).
+* Initialize Google Cloud in the terminal with `gcloud init`, follow the steps shown in the terminal, and run `gcloud auth application-default login` to log in to your Google Cloud account.
 
 
 #### Importing Necessary Libraries - Ensure all necessary libraries are imported:
